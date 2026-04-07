@@ -80,13 +80,12 @@ cli-tools-guide/
 ---
 title: "toolname — Short description"
 description: "SEO meta description for the tool page."
-slug: toolname
 category: search          # file-viewer | editor | search | ...
 tags: [tag1, tag2]
 featured: false
 installCommand: "brew install toolname"
 officialUrl: "https://github.com/..."
-related: [bat, fzf]       # slugs of related tools
+related: [bat, fzf]       # slugs of related tools (= markdown filenames without .md)
 pubDate: 2024-06-01
 ---
 ```
@@ -137,7 +136,7 @@ Ad positions in every tool page:
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | [Astro 4](https://astro.build) |
+| Framework | [Astro 5](https://astro.build) |
 | Styling | [Tailwind CSS 3](https://tailwindcss.com) |
 | Content | Markdown files |
 | Deployment | [Cloudflare Pages](https://pages.cloudflare.com) |

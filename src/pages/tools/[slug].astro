@@ -2,46 +2,29 @@
 // src/pages/tools/[slug].astro — Dynamic tool page
 import ToolLayout from '../../layouts/ToolLayout.astro';
 import AdBlock from '../../components/AdBlock.astro';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const toolFiles = await Astro.glob('../../content/tools/*.md');
-  return toolFiles.map((file) => ({
-    params: { slug: file.frontmatter.slug as string },
-    props: { tool: file },
+  const toolEntries = await getCollection('tools');
+  return toolEntries.map((entry) => ({
+    // entry.id in Astro 5 includes the file extension (e.g. "bat.md"), strip it for clean URLs
+    params: { slug: entry.id.replace(/\.md$/, '') },
+    props: { entry },
   }));
 }
 
-interface Props {
-  tool: {
-    frontmatter: {
-      title: string;
-      description: string;
-      slug: string;
-      category: string;
-      tags: string[];
-      featured?: boolean;
-      installCommand?: string;
-      officialUrl?: string;
-      related?: string[];
-      pubDate?: string;
-    };
-    Content: astroHTML.JSX.Element;
-    compiledContent(): string;
-    rawContent(): string;
-    getHeadings(): { depth: number; slug: string; text: string }[];
-  };
-}
+const { entry } = Astro.props;
+// In Astro 5, entry.id includes the file extension (e.g. "bat.md") — strip it for clean URLs
+const { data: frontmatter } = entry;
+const slug = entry.id.replace(/\.md$/, '');
 
-const { tool } = Astro.props;
-const { frontmatter, Content } = tool;
+// Render the markdown content and extract headings for the TOC
+const { Content, headings: rawHeadings } = await render(entry);
 
-// Build the table of contents from headings (h2 and h3 only)
-const headings = tool.getHeadings().filter((h) => h.depth === 2 || h.depth === 3);
-const toc = headings.map((h) => ({
-  id: h.slug,
-  text: h.text,
-  level: h.depth,
-}));
+// Build the table of contents from h2 and h3 headings only
+const toc = rawHeadings
+  .filter((h) => h.depth === 2 || h.depth === 3)
+  .map((h) => ({ id: h.slug, text: h.text, level: h.depth }));
 
 // Related tools metadata for the "Related Tools" card section
 interface RelatedTool {
@@ -64,7 +47,7 @@ const relatedTools: RelatedTool[] = (frontmatter.related ?? [])
 <ToolLayout
   title={frontmatter.title}
   description={frontmatter.description}
-  tool={frontmatter.slug}
+  tool={slug}
   toc={toc}
 >
   <!-- Tool Content from Markdown -->
@@ -113,7 +96,7 @@ const relatedTools: RelatedTool[] = (frontmatter.related ?? [])
     )}
     {frontmatter.pubDate && (
       <span>
-        📅 Published: {new Date(frontmatter.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        📅 Published: {frontmatter.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
       </span>
     )}
   </div>

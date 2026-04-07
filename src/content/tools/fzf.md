@@ -1,7 +1,6 @@
 ---
 title: "fzf — A General-Purpose Fuzzy Finder"
 description: "Supercharge your terminal workflow with fzf, the blazing-fast fuzzy finder. Learn to search files, history, processes, and integrate fzf with other tools for maximum productivity."
-slug: fzf
 category: search
 tags: [fzf, fuzzy-finder, search, terminal, productivity]
 featured: true

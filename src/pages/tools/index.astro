@@ -2,26 +2,15 @@
 // src/pages/tools/index.astro — All tools listing page
 import Layout from '../../layouts/Layout.astro';
 import AdBlock from '../../components/AdBlock.astro';
+import { getCollection } from 'astro:content';
 
-// Import all tool markdown files
-const toolFiles = await Astro.glob('../../content/tools/*.md');
+const toolEntries = await getCollection('tools');
 
-interface ToolFrontmatter {
-  title: string;
-  description: string;
-  slug: string;
-  category: string;
-  tags: string[];
-  featured?: boolean;
-  installCommand?: string;
-  officialUrl?: string;
-  pubDate?: string;
-}
-
-const tools = toolFiles
-  .map((file) => ({
-    ...(file.frontmatter as ToolFrontmatter),
-    url: `/tools/${(file.frontmatter as ToolFrontmatter).slug}`,
+const tools = toolEntries
+  .map((entry) => ({
+    ...entry.data,
+    // entry.id in Astro 5 includes the file extension (e.g. "bat.md"), strip it for clean URLs
+    url: `/tools/${entry.id.replace(/\.md$/, '')}`,
   }))
   .sort((a, b) => a.title.localeCompare(b.title));
 

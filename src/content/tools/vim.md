@@ -1,7 +1,6 @@
 ---
 title: "vim — The Ubiquitous Terminal Text Editor"
 description: "Master vim, the powerful modal text editor found on virtually every Unix system. Learn essential commands, configuration tips, and pro tricks to boost your productivity."
-slug: vim
 category: editor
 tags: [vim, editor, text-editor, terminal, modal-editing]
 featured: true

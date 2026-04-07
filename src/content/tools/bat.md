@@ -1,7 +1,6 @@
 ---
 title: "bat — A cat Clone with Syntax Highlighting"
 description: "Learn how to use bat, the modern replacement for cat with syntax highlighting, Git integration, and automatic paging. Includes practical tips and tricks."
-slug: bat
 category: file-viewer
 tags: [bat, cat, syntax-highlighting, terminal, file-viewer]
 featured: true
