@@ -1,0 +1,59 @@
+---
+// AdBlock.astro — Google AdSense ad placement component
+// Replace the placeholder values with your actual AdSense publisher ID and slot IDs
+// from your Google AdSense dashboard (https://www.google.com/adsense/)
+
+export interface Props {
+  /** Ad slot position label used for identification (e.g. "top", "mid", "bottom") */
+  slot?: string;
+  /** Display format: "horizontal" | "vertical" | "rectangle" */
+  format?: 'horizontal' | 'vertical' | 'rectangle';
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  slot = 'top',
+  format = 'horizontal',
+  class: className = '',
+} = Astro.props;
+
+// AD: Replace these with your actual AdSense IDs from .env
+const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? 'ca-pub-XXXXXXXXXXXXXXXXX';
+const slotIds: Record<string, string> = {
+  top: import.meta.env.PUBLIC_ADSENSE_SLOT_TOP ?? 'XXXXXXXXXX',
+  mid: import.meta.env.PUBLIC_ADSENSE_SLOT_MID ?? 'XXXXXXXXXX',
+  bottom: import.meta.env.PUBLIC_ADSENSE_SLOT_BOTTOM ?? 'XXXXXXXXXX',
+};
+const slotId = slotIds[slot] ?? slotIds.top;
+
+const heightMap = {
+  horizontal: 'h-24',
+  vertical: 'h-64',
+  rectangle: 'h-60',
+};
+const heightClass = heightMap[format];
+---
+
+<!-- AD: AdSense ad unit — slot: {slot} -->
+<div class={`ad-container my-6 ${className}`} aria-label="Advertisement">
+  <!-- AD: Uncomment the script tag below and add your AdSense script in Layout.astro head -->
+  <!--
+  <ins
+    class="adsbygoogle"
+    style="display:block"
+    data-ad-client={adsenseClient}
+    data-ad-slot={slotId}
+    data-ad-format={format === 'horizontal' ? 'auto' : format}
+    data-full-width-responsive="true"
+  ></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  -->
+
+  <!-- AD: Placeholder shown during development — remove when AdSense is enabled -->
+  <div
+    class={`w-full ${heightClass} bg-gray-100 dark:bg-slate-800 border-2 border-dashed border-gray-300 dark:border-slate-600 rounded-lg flex items-center justify-center text-gray-400 dark:text-slate-500 text-sm`}
+  >
+    <span>📢 Ad Placeholder ({slot} / {format})</span>
+  </div>
+</div>

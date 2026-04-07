@@ -1,0 +1,29 @@
+# Build output
+dist/
+.output/
+
+# Dependencies
+node_modules/
+
+# Astro generated types
+.astro/
+src/env.d.ts
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*

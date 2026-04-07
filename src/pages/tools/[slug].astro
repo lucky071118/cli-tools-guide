@@ -1,0 +1,120 @@
+---
+// src/pages/tools/[slug].astro — Dynamic tool page
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import AdBlock from '../../components/AdBlock.astro';
+
+export async function getStaticPaths() {
+  const toolFiles = await Astro.glob('../../content/tools/*.md');
+  return toolFiles.map((file) => ({
+    params: { slug: file.frontmatter.slug as string },
+    props: { tool: file },
+  }));
+}
+
+interface Props {
+  tool: {
+    frontmatter: {
+      title: string;
+      description: string;
+      slug: string;
+      category: string;
+      tags: string[];
+      featured?: boolean;
+      installCommand?: string;
+      officialUrl?: string;
+      related?: string[];
+      pubDate?: string;
+    };
+    Content: astroHTML.JSX.Element;
+    compiledContent(): string;
+    rawContent(): string;
+    getHeadings(): { depth: number; slug: string; text: string }[];
+  };
+}
+
+const { tool } = Astro.props;
+const { frontmatter, Content } = tool;
+
+// Build the table of contents from headings (h2 and h3 only)
+const headings = tool.getHeadings().filter((h) => h.depth === 2 || h.depth === 3);
+const toc = headings.map((h) => ({
+  id: h.slug,
+  text: h.text,
+  level: h.depth,
+}));
+
+// Related tools metadata for the "Related Tools" card section
+interface RelatedTool {
+  slug: string;
+  icon: string;
+  label: string;
+}
+
+const relatedMeta: Record<string, RelatedTool> = {
+  bat: { slug: 'bat', icon: '🦇', label: 'bat — cat with syntax highlighting' },
+  vim: { slug: 'vim', icon: '📝', label: 'vim — advanced text editor' },
+  fzf: { slug: 'fzf', icon: '🔍', label: 'fzf — fuzzy finder' },
+};
+
+const relatedTools: RelatedTool[] = (frontmatter.related ?? [])
+  .map((r: string) => relatedMeta[r])
+  .filter(Boolean);
+---
+
+<ToolLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  tool={frontmatter.slug}
+  toc={toc}
+>
+  <!-- Tool Content from Markdown -->
+  <Content />
+
+  <!-- AD: Mid-article placement (after main content, before related tools) -->
+  <AdBlock slot="mid" format="rectangle" />
+
+  <!-- Related Tools Card Row -->
+  {relatedTools.length > 0 && (
+    <div class="mt-10 pt-8 border-t border-gray-200 dark:border-slate-700">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Related Tools</h2>
+      <div class="flex flex-wrap gap-4">
+        {relatedTools.map((rt) => (
+          <a
+            href={`/tools/${rt.slug}`}
+            class="flex items-center gap-3 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-5 py-3 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md transition-all"
+          >
+            <span class="text-2xl" aria-hidden="true">{rt.icon}</span>
+            <span class="font-medium text-gray-800 dark:text-slate-200 text-sm">{rt.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Tool Metadata Footer -->
+  <div class="mt-10 pt-6 border-t border-gray-200 dark:border-slate-700 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-slate-400">
+    {frontmatter.installCommand && (
+      <div class="flex items-center gap-2">
+        <span>📦 Quick install:</span>
+        <code class="bg-gray-900 dark:bg-slate-700 text-green-400 font-mono px-2 py-0.5 rounded text-xs">
+          {frontmatter.installCommand}
+        </code>
+      </div>
+    )}
+    {frontmatter.officialUrl && (
+      <a
+        href={frontmatter.officialUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+      >
+        🌐 Official site ↗
+      </a>
+    )}
+    {frontmatter.pubDate && (
+      <span>
+        📅 Published: {new Date(frontmatter.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </span>
+    )}
+  </div>
+</ToolLayout>
