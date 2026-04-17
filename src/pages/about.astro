@@ -1,0 +1,73 @@
+---
+// src/pages/about.astro — About page
+import Layout from '../layouts/Layout.astro';
+import AdBlock from '../components/AdBlock.astro';
+---
+
+<Layout
+  title="About"
+  description="About CLI Tools Guide — a resource for developers who want to master the command line with practical guides, tips and tricks."
+>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-gray-500 dark:text-slate-400">
+      <ol class="flex items-center gap-2">
+        <li><a href="/" class="hover:text-blue-600 dark:hover:text-blue-400">Home</a></li>
+        <li><span class="mx-1">›</span></li>
+        <li class="text-gray-800 dark:text-slate-200 font-medium" aria-current="page">About</li>
+      </ol>
+    </nav>
+
+    <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-6">About CLI Tools Guide</h1>
+
+    <!-- AD: Top of about page -->
+    <AdBlock slot="top" format="horizontal" />
+
+    <div class="prose-tool">
+      <h2 id="what-is-this">What is CLI Tools Guide?</h2>
+      <p>
+        <strong>CLI Tools Guide</strong> is a curated resource for developers, sysadmins, and anyone who
+        wants to level up their command-line workflow. Each guide combines a complete tool introduction
+        with practical tips, tricks, and real-world usage patterns — so you can go from "what is this?"
+        to "I use this every day" in one page.
+      </p>
+
+      <h2 id="what-youll-find">What You'll Find Here</h2>
+      <p>Each tool page includes:</p>
+      <ul>
+        <li>📖 <strong>Introduction</strong> — what the tool is and why you'd want to use it</li>
+        <li>⚙️ <strong>Installation</strong> — commands for every major platform</li>
+        <li>🚀 <strong>Basic usage</strong> — get productive immediately</li>
+        <li>💡 <strong>5–8 practical tips &amp; tricks</strong> — the things that make the tool truly powerful</li>
+        <li>🔬 <strong>Advanced applications</strong> — combining tools and real-world patterns</li>
+        <li>🔗 <strong>Related resources</strong> — official docs, books, and communities</li>
+      </ul>
+
+      <h2 id="tools-covered">Tools Covered</h2>
+      <p>Currently we cover:</p>
+      <ul>
+        <li><a href="/tools/bat"><strong>bat</strong></a> — a beautiful replacement for <code>cat</code> with syntax highlighting</li>
+        <li><a href="/tools/vim"><strong>vim</strong></a> — the ubiquitous modal text editor</li>
+        <li><a href="/tools/fzf"><strong>fzf</strong></a> — a blazing-fast fuzzy finder for everything</li>
+      </ul>
+      <p>More tools are added regularly. Planned additions include <code>ripgrep</code>, <code>tmux</code>, <code>jq</code>, <code>delta</code>, <code>zoxide</code>, and many more.</p>
+
+      <h2 id="about-the-site">About the Site</h2>
+      <p>
+        This site is built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> and
+        <a href="https://tailwindcss.com" target="_blank" rel="noopener">Tailwind CSS</a>, deployed on
+        <a href="https://pages.cloudflare.com" target="_blank" rel="noopener">Cloudflare Pages</a> for
+        global CDN performance. Content is authored in Markdown, making it easy to add and update tools.
+      </p>
+
+      <h2 id="contributing">Contributing</h2>
+      <p>
+        Found an error, outdated command, or want to suggest a tool? Contributions are welcome!
+        The source code is on <a href="https://github.com/lucky071118/cli-tools-guide" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </div>
+
+    <!-- AD: Bottom of about page -->
+    <AdBlock slot="bottom" format="horizontal" />
+  </div>
+</Layout>

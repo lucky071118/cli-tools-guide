@@ -1,0 +1,46 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+        env:
+          PUBLIC_ADSENSE_CLIENT_ID: ${{ secrets.PUBLIC_ADSENSE_CLIENT_ID }}
+          PUBLIC_ADSENSE_SLOT_TOP: ${{ secrets.PUBLIC_ADSENSE_SLOT_TOP }}
+          PUBLIC_ADSENSE_SLOT_MID: ${{ secrets.PUBLIC_ADSENSE_SLOT_MID }}
+          PUBLIC_ADSENSE_SLOT_BOTTOM: ${{ secrets.PUBLIC_ADSENSE_SLOT_BOTTOM }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: cli-tools-guide
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,85 @@
+---
+// src/pages/tools/index.astro — All tools listing page
+import Layout from '../../layouts/Layout.astro';
+import AdBlock from '../../components/AdBlock.astro';
+import { getCollection } from 'astro:content';
+
+const toolEntries = await getCollection('tools');
+
+const tools = toolEntries
+  .map((entry) => ({
+    ...entry.data,
+    // entry.id in Astro 5 includes the file extension (e.g. "bat.md"), strip it for clean URLs
+    url: `/tools/${entry.id.replace(/\.md$/, '')}`,
+  }))
+  .sort((a, b) => a.title.localeCompare(b.title));
+
+const categoryIcons: Record<string, string> = {
+  'file-viewer': '👁️',
+  editor: '📝',
+  search: '🔍',
+  default: '⚡',
+};
+---
+
+<Layout
+  title="All CLI Tools"
+  description="Browse all CLI tool guides — bat, vim, fzf, and more. Each guide includes installation, basic usage, tips & tricks, and advanced patterns."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-gray-500 dark:text-slate-400">
+      <ol class="flex items-center gap-2">
+        <li><a href="/" class="hover:text-blue-600 dark:hover:text-blue-400">Home</a></li>
+        <li><span class="mx-1">›</span></li>
+        <li class="text-gray-800 dark:text-slate-200 font-medium" aria-current="page">Tools</li>
+      </ol>
+    </nav>
+
+    <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-3">All CLI Tools</h1>
+    <p class="text-gray-500 dark:text-slate-400 mb-8 text-lg">
+      {tools.length} tool{tools.length !== 1 ? 's' : ''} — practical guides with tips &amp; tricks.
+    </p>
+
+    <!-- AD: Top of tools listing -->
+    <AdBlock slot="top" format="horizontal" />
+
+    <!-- Tool Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      {tools.map((tool) => (
+        <a href={tool.url} class="tool-card group block">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl" aria-hidden="true">
+              {categoryIcons[tool.category] ?? categoryIcons.default}
+            </span>
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {tool.title.split('—')[0].trim()}
+              </h2>
+              {tool.featured && (
+                <span class="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 font-medium px-2 py-0.5 rounded-full">
+                  Featured
+                </span>
+              )}
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">
+            {tool.description}
+          </p>
+          {tool.tags && (
+            <div class="flex flex-wrap gap-1.5">
+              {tool.tags.slice(0, 4).map((tag: string) => (
+                <span class="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300 text-xs px-2 py-0.5 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+
+    <!-- AD: Bottom of tools listing -->
+    <AdBlock slot="bottom" format="horizontal" class="mt-10" />
+  </div>
+</Layout>
