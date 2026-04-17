@@ -29,6 +29,16 @@ npm run dev
 
 Open [http://localhost:4321](http://localhost:4321) to see the site.
 
+### Security Checks
+
+```bash
+# Check known vulnerabilities in installed dependencies
+npm run security:audit
+
+# Check the lockfile only (useful in CI or fast reviews)
+npm run security:audit:lockfile
+```
+
 ---
 
 ## 🏗️ Project Structure
@@ -120,7 +130,7 @@ Ad positions in every tool page:
    - `CLOUDFLARE_ACCOUNT_ID`
    - (Optional) `PUBLIC_ADSENSE_CLIENT_ID`, `PUBLIC_ADSENSE_SLOT_TOP`, etc.
 
-2. Push to `main` — GitHub Actions will build and deploy automatically.
+2. Push to `main` — GitHub Actions will run dependency review for pull requests, audit npm dependencies, build the site, and deploy automatically after the checks pass.
 
 ### Manual Cloudflare Pages setup
 
