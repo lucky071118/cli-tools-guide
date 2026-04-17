@@ -100,8 +100,9 @@ Ad placements are handled by `src/components/AdBlock.astro`. To enable real ads:
 
 1. Apply for [Google AdSense](https://www.google.com/adsense/start/)
 2. Copy `.env.example` to `.env` and fill in your publisher ID and slot IDs
-3. In `src/layouts/Layout.astro`, uncomment the AdSense `<script>` tag in `<head>`
-4. In `src/components/AdBlock.astro`, uncomment the `<ins>` ad unit and remove the placeholder `<div>`
+3. Set the `PUBLIC_ADSENSE_*` values in your deployment environment
+4. The AdSense loader in `src/layouts/Layout.astro` and the ad units in `src/components/AdBlock.astro` will enable automatically when those values are present
+5. Cloudflare Pages security headers, including CSP for AdSense, are defined in `public/_headers`
 
 Ad positions in every tool page:
 - **Top** — below the breadcrumb, before content
