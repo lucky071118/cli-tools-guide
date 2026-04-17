@@ -20,10 +20,14 @@ const {
 
 const siteName = 'CLI Tools Guide';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+const adsenseClientId = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID;
+const hasAdsenseClient = Boolean(
+  adsenseClientId && adsenseClientId !== 'ca-pub-XXXXXXXXXXXXXXXXX',
+);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -51,21 +55,15 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- AD: Add your Google AdSense script here when your account is approved -->
-    <!-- Replace ca-pub-XXXXXXXXXXXXXXXXX with your actual publisher ID -->
-    <!--
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-    -->
+    {hasAdsenseClient && (
+      <script
+        is:inline
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
+        crossorigin="anonymous"
+      ></script>
+    )}
 
-    <!-- Theme initializer: prevent flash of wrong theme -->
-    <script is:inline>
-      (function () {
-        const stored = localStorage.getItem('theme');
-        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <NavBar />
@@ -73,5 +71,6 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
       <slot />
     </main>
     <Footer />
+    {hasAdsenseClient && <script is:inline defer src="/scripts/adsbygoogle-init.js"></script>}
   </body>
 </html>
