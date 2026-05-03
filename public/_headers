@@ -1,6 +1,24 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; font-src 'self' data:; script-src 'self' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://fundingchoicesmessages.google.com https://adservice.google.com; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com https://adservice.google.com https://www.google.com; frame-src https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com https://*.google.com https://*.doubleclick.net; media-src 'self' https:; upgrade-insecure-requests
+  Content-Security-Policy: 
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    form-action 'self';
+    frame-ancestors 'none';
+    manifest-src 'self';
+    font-src 'self' data:;
+    script-src 'self' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://fundingchoicesmessages.google.com https://adservice.google.com;
+    style-src 'self';
+    img-src 'self' data: https:;
+    connect-src 'self' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com https://adservice.google.com https://www.google.com;
+    frame-src https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com https://*.google.com https://*.doubleclick.net;
+    media-src 'self' https:;
+    upgrade-insecure-requests;
+    report-to="sentry-csp-endpoint"
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Report-To: {"group":"sentry-csp-endpoint","max_age":10886400,"endpoints":[{"url":"https://o4511324793536512.ingest.us.sentry.io/api/4511324821258240/security/?sentry_key=115cde30fe3a30e16b03c77688f3aad5"}],"include_subdomains":true}
