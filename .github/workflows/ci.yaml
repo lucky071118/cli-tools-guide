@@ -1,4 +1,4 @@
-name: CI and Deploy to Cloudflare Pages
+name: CI
 
 on:
   push:
@@ -7,6 +7,9 @@ on:
   pull_request:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   dependency-review:
@@ -22,11 +25,8 @@ jobs:
         with:
           fail-on-severity: high
 
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
 
     steps:
       - name: Checkout repository
@@ -48,17 +48,3 @@ jobs:
 
       - name: Build Astro site
         run: npm run build
-        env:
-          PUBLIC_ADSENSE_CLIENT_ID: ${{ secrets.PUBLIC_ADSENSE_CLIENT_ID }}
-          PUBLIC_ADSENSE_SLOT_TOP: ${{ secrets.PUBLIC_ADSENSE_SLOT_TOP }}
-          PUBLIC_ADSENSE_SLOT_MID: ${{ secrets.PUBLIC_ADSENSE_SLOT_MID }}
-          PUBLIC_ADSENSE_SLOT_BOTTOM: ${{ secrets.PUBLIC_ADSENSE_SLOT_BOTTOM }}
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: cli-tools-guide
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
