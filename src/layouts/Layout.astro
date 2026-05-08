@@ -55,14 +55,8 @@ const hasAdsenseClient = Boolean(
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    {hasAdsenseClient && (
-      <script
-        is:inline
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`}
-        crossorigin="anonymous"
-      ></script>
-    )}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2857099576461226"
+      crossorigin="anonymous"></script>
 
   </head>
   <body class="min-h-screen flex flex-col">
