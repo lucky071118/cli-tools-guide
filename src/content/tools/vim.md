@@ -8,6 +8,8 @@ installCommand: "sudo apt install vim"
 officialUrl: "https://www.vim.org"
 related: [bat, fzf]
 pubDate: 2024-01-16
+author: "CLI Tools Guide"
+lastUpdated: 2024-01-16
 ---
 
 # vim — The Ubiquitous Terminal Text Editor
@@ -314,3 +316,64 @@ do        — diff obtain (get change from other window)
 
 - [bat](/tools/bat) — view files with syntax highlighting when you don't need to edit
 - [fzf](/tools/fzf) — fuzzy finder with excellent vim integration
+
+## Real-world Use Cases
+
+- Remote server edits: fix configs quickly over SSH without a GUI.
+- Bulk refactors: use macros and substitution to apply repetitive changes across large codebases.
+- Commit message crafting: tidy, standardized messages edited in vim for consistency.
+
+## When Not To Use vim
+
+- If you prefer GUI-only editing or depend on features not available in terminal editors; consider VS Code or JetBrains IDEs.
+
+---
+
+*Author: CLI Tools Guide — [Contact](/contact) | Last updated: 2024-01-16*
+
+## 實作範例：三個 vim 工作流程範例
+
+下面範例說明如何用 vim 高效處理遠端編輯、批量重構與自動化 commit 訊息。
+
+1) 遠端快速修正（SSH + vim）
+
+在遠端伺服器上，你可以使用 `vim -R` 或 `vim +:set noreadonly` 等方式檢查並編輯檔案。範例：
+
+```bash
+# 透過 ssh 進入伺服器，利用 vim 編輯 nginx 設定
+ssh user@host "sudo vim /etc/nginx/nginx.conf"
+```
+
+使用 vim 的 `:set backupcopy=yes` 與 `:w` 可確保編輯時權限與備份行為符合預期。
+
+2) 批量重構：宏與 substitute 的組合
+
+當有大量重複修改時，記錄一個 macro 並套用到多行：
+
+```vim
+" 假設要在每行末尾加上分號
+qa A;<Esc>q
+" 在 100 行上重播 macro
+100@a
+```
+
+對於跨檔案的替換，結合 `:argdo` 與 `:bufdo`：
+
+```vim
+" 在所有參數檔案中替換 foo -> bar
+:argdo %s/foo/bar/g | update
+```
+
+3) 自動化 commit 訊息模板
+
+在 `.git/` 內設定 `core.editor` 為 vim，並使用 commit-msg 範本：
+
+```bash
+git config --global core.editor "vim"
+echo -e "# Title\n\n# Body (wrap at 72 chars)\n" > .git/commit-template
+git config --global commit.template .git/commit-template
+```
+
+這樣在 `git commit` 時會載入範本，讓團隊的提交訊息更一致。
+
+這些實際範例能讓你在不同情境下更有效率地使用 vim：從單機到遠端、從單次操作到批次自動化。

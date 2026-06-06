@@ -39,8 +39,7 @@ const tocIndentClass = (level: number) => {
       </ol>
     </nav>
 
-    <!-- AD: Top of tool page — high-visibility placement -->
-    <AdBlock slot="top" format="horizontal" />
+    <!-- Top ad removed to improve first-content visibility for users and reviewers -->
 
     <div class="lg:flex lg:gap-8">
       <!-- Table of Contents (desktop sidebar) -->
@@ -98,8 +97,10 @@ const tocIndentClass = (level: number) => {
           <slot />
         </article>
 
-        <!-- AD: Bottom of tool page -->
-        <AdBlock slot="bottom" format="rectangle" />
+        <!-- Desktop-only side/mid ad: hidden on mobile to improve UX -->
+        <div class="hidden lg:block">
+          <AdBlock slot="mid" format="vertical" />
+        </div>
       </div>
     </div>
   </div>
