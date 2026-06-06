@@ -8,6 +8,8 @@ installCommand: "cargo install bat"
 officialUrl: "https://github.com/sharkdp/bat"
 related: [vim, fzf]
 pubDate: 2024-01-15
+author: "CLI Tools Guide"
+lastUpdated: 2024-01-15
 ---
 
 # bat — A cat Clone with Syntax Highlighting
@@ -232,3 +234,65 @@ BAT_STYLE=plain BAT_THEME=ansi bat file.txt
 
 - [fzf](/tools/fzf) — fuzzy finder that pairs perfectly with bat for file previews
 - [vim](/tools/vim) — when you need to edit, not just view
+
+## Real-world Use Cases
+
+- Code review: quickly preview changed files before committing, with `git diff` integration to spot context-sensitive changes.
+- Learning new languages: use `bat` to scan sample projects with syntax highlighting to understand structure faster.
+- Debugging logs: colorize structured logs (JSON, YAML) to spot fields and anomalies.
+
+## When Not To Use bat
+
+- Very small environments where installing Rust binaries is not possible; fallback to `cat`.
+- Scripts that require pure, colorless output — use `--color=never` or `--style=plain`.
+
+---
+
+*Author: CLI Tools Guide — [Contact](/contact) | Last updated: 2024-01-15*
+
+## 實作範例：用 `bat` 建立可讀性更佳的檢視流程
+
+以下範例示範如何把 `bat` 整合到日常工作流程，提高檔案檢視與除錯效率。範例涵蓋三個情境：快速預覽、Git 差異檢查，以及在管線中使用無色輸出。
+
+1) 快速預覽專案檔案（搭配 fzf）
+
+把 `bat` 與 `fzf` 結合，建立一個互動式檔案預覽工具：
+
+```bash
+# 將可預覽的檔案使用 fzf 選擇，右側顯示 bat 預覽
+fzf --preview 'bat --color=always --style=numbers --line-range=:120 {}' \
+  --preview-window 'right:60%' \
+  --bind 'enter:accept' \
+  --height 40%
+```
+
+這個指令可以快速在大型專案中定位檔案，且預覽會顯示語法高亮與行號，閱讀與導覽更直覺。
+
+2) 在 Git 差異檢查中漂亮顯示變更
+
+把 `bat` 設為 Git 的 pager，可在 `git diff` 時看到帶顏色與行號的差異：
+
+```bash
+git config --global core.pager "bat --paging=always --style=numbers,changes"
+
+# 現在執行 git diff 時會用 bat 顯示（保留色彩與變動標記）
+git diff HEAD~1
+```
+
+這能幫助審查變更時更快定位到改動的位置與語義。
+
+3) 在自動化腳本中輸出純文字（無顏色）以便解析
+
+若要在 CI 或腳本中使用 `bat` 輸出但不希望有顏色控制碼，可以關閉色彩並使用純輸出：
+
+```bash
+# 在腳本中使用無色輸出以保證被其他工具正確解析
+bat --color=never --style=plain README.md > /tmp/readme-plain.txt
+
+# 或在管線中直接傳給 grep/awk 處理
+bat --color=never src/main.rs | rg "TODO|FIXME"
+```
+
+這樣可以在保有 `bat` 的語言推斷與格式化優勢下，提供機器讀取友好的輸出。
+
+以上實作示例可立即提升日常使用 `bat` 的效率，並讓檔案檢視、版本檢查與自動化流程更穩定。

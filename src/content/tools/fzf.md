@@ -8,6 +8,8 @@ installCommand: "brew install fzf"
 officialUrl: "https://github.com/junegunn/fzf"
 related: [bat, vim]
 pubDate: 2024-01-17
+author: "CLI Tools Guide"
+lastUpdated: 2024-01-17
 ---
 
 # fzf — A General-Purpose Fuzzy Finder
@@ -253,3 +255,55 @@ alias rgf='rg_fzf'
 
 - [bat](/tools/bat) — pairs perfectly with fzf for file previews
 - [vim](/tools/vim) — edit files found with fzf
+
+## Real-world Use Cases
+
+- Repository navigation: jump to files, branches, and commits in large mono-repos without memorizing paths.
+- Ops workflows: select pods, containers, or logs interactively during incident response.
+- Search automation: integrate `rg` + `fzf` to triage code references and fix locations quickly.
+
+## When Not To Use fzf
+
+- When you need a deterministic, scriptable selection with no interactive step; use scripted filters instead.
+
+---
+
+*Author: CLI Tools Guide — [Contact](/contact) | Last updated: 2024-01-17*
+
+## 實作範例：用 `fzf` 建立快速搜尋與自動化工作流程
+
+以下示範 3 個實作場景，展示如何把 `fzf` 與其他工具（如 `rg`, `bat`, `git`, `kubectl`）結合，提升開發與運維效率。
+
+1) 在專案中以內容搜尋快速跳轉到檔案並定位行號
+
+```bash
+# 使用 ripgrep 搜尋，再用 fzf 選擇結果並在 vim 中開啟對應行
+rg --line-number --hidden --glob '!.git' "$1" | \
+  fzf --ansi --delimiter ':' --preview 'bat --color=always --highlight-line {2} {1}' \
+      --preview-window 'right:60%' \
+  | awk -F: '{print $1":"$2}' | xargs -r vim +"$(cut -d: -f2)" -c "normal! zz"
+```
+
+這個管線允許你鍵入搜尋字串，互動式挑選結果，並在編輯器中直接跳到該行。
+
+2) 互動式 Pod 選擇與日誌檢視（Kubernetes）
+
+```bash
+# 選取 pod，並 tail 日誌（搭配 fzf 預覽）
+kubectl get pods --no-headers | fzf --preview 'kubectl logs -n default {1} --tail=100' --bind 'enter:execute(kubectl logs -n default {1} -f)'
+```
+
+在故障排查時，這能快速挑選目標 pod 並即時觀察其日誌。
+
+3) 自動化選擇並執行常用 Git 操作
+
+```bash
+# fuzzy checkout with recent commits preview
+git branch --all --color=always | \
+  fzf --ansi --preview 'git log --oneline --color=always {1}' --preview-window 'right:60%' \ 
+  | sed 's/.* //g' | xargs -r git checkout
+```
+
+這能幫助你在大型倉庫中快速切換分支或檢視提交歷史。
+
+這些實作示例展示了 `fzf` 作為互動式介面在查找、判別與操作資源時的強大能力，並且容易與現有 CLI 工具整合。
