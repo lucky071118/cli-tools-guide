@@ -52,6 +52,33 @@ const hasAdsenseClient = Boolean(
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <!-- Structured data (JSON-LD) -->
+    <script type="application/ld+json" is:inline>
+      {JSON.stringify(() => {
+        const ld = {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "name": siteName,
+              "url": canonicalURL
+            }
+          ]
+        };
+        if (title && title !== siteName) {
+          ld["@graph"].push({
+            "@type": "Article",
+            "headline": fullTitle,
+            "description": description,
+            "image": ogImage,
+            "url": canonicalURL,
+            "publisher": { "@type": "Organization", "name": siteName }
+          });
+        }
+        return ld;
+      }())}
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
