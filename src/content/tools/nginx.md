@@ -27,9 +27,9 @@ sudo systemctl enable nginx
 sudo nginx -t
 ```
 
-## Practical Example: 設置反向代理和靜態資源緩存
+## Practical Example: Set Up Reverse Proxying and Static Asset Caching
 
-以下示例展示一個基本的 site 配置，將 `/` 代理到後端應用，並且對 `/assets/` 啟用 long-term cache：
+The following example shows a basic site configuration that proxies `/` to a backend application and enables long-term caching for `/assets/`:
 
 ```nginx
 server {
@@ -51,7 +51,7 @@ server {
 }
 ```
 
-用 `curl -I https://example.com/assets/app.js` 可以檢查響應頭的 Cache-Control/Expires 是否如預期。
+Use `curl -I https://example.com/assets/app.js` to verify that the `Cache-Control` and `Expires` response headers are set as expected.
 
 ## Related Resources
 

@@ -40,20 +40,20 @@ aws ec2 describe-instances --region us-east-1
 
 ## Practical Example: Sync S3, filter with jq, and notify
 
-以下範例展示如何同步靜態網站檔案到 S3、取得已上傳物件的摘要並發送通知。
+The example below shows how to sync static site files to S3, fetch a summary of uploaded objects, and send a notification.
 
 ```bash
-# 同步本地 dist 到 S3
+# Sync the local dist directory to S3
 aws s3 sync ./dist s3://my-static-site --acl public-read --delete
 
-# 取得最近 10 個上傳的物件並以 jq 格式化
+# Fetch the 10 most recently listed objects and format them with jq
 aws s3api list-objects-v2 --bucket my-static-site --query 'Contents[0:10]' | jq '.[] | {Key: .Key, Size: .Size, LastModified: .LastModified}'
 
-# 發送簡單通知（假設已設定 SNS topic）
+# Send a simple notification, assuming an SNS topic is already configured
 aws sns publish --topic-arn arn:aws:sns:us-east-1:123456789012:deploys --message "Deployed to S3: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 ```
 
-這樣可以把部署、核對與通知流程串成一個輕量的自動化任務。
+This turns deployment, verification, and notification into a lightweight automation workflow.
 
 ## Related Resources
 

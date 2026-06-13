@@ -30,9 +30,9 @@ tmux attach -t dev
 tmux ls
 ```
 
-## Practical Example: 開發工作區範本
+## Practical Example: Development Workspace Template
 
-為了快速建立一致的開發環境，可以用一個簡單的 tmux 腳本建立多窗格：
+To create a consistent development environment quickly, you can use a simple tmux script to build a multi-pane workspace:
 
 ```bash
 tmux new-session -d -s workspace
@@ -44,7 +44,7 @@ tmux select-pane -t 0
 tmux attach -t workspace
 ```
 
-這會在一個 session 建立編輯器窗格與開發伺服器窗格，方便在本機或遠端工作時保持一致的視窗佈局。
+This creates editor and development-server panes in a single session, which helps keep the window layout consistent whether you work locally or remotely.
 
 ## Related Resources
 

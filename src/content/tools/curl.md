@@ -31,10 +31,10 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"ok"}' https://api.
 
 ## Practical Example: API Debugging Pipeline
 
-使用 `curl` 搭配 `jq` 可以快速調試和串接 REST API：
+Using `curl` together with `jq` is a fast way to debug and compose REST API workflows:
 
 ```bash
-# 呼叫 API，解析 JSON，並根據結果做條件處理
+# Call the API, parse JSON, and branch based on the result
 response=$(curl -s -w "%{http_code}" -o /tmp/resp.json "https://api.example.com/items/42")
 http_code=${response:(-3)}
 if [ "$http_code" -eq 200 ]; then
@@ -45,7 +45,7 @@ else
 fi
 ```
 
-另一個常見場景是把 `curl` 用於健康檢查與監控腳本：
+Another common pattern is using `curl` in health checks and monitoring scripts:
 
 ```bash
 if ! curl -sSf https://example.com/health >/dev/null; then

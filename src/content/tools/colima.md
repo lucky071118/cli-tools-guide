@@ -52,7 +52,7 @@ kubectl apply -f https://k8s.io/examples/application/deployment.yaml
 kubectl get pods -o wide
 ```
 
-這個本地叢集對於快速驗證 Helm charts、CI 前的 smoke tests 非常方便，且啟動速度通常比虛擬化更快。
+This local cluster is very convenient for quickly validating Helm charts or running pre-CI smoke tests, and it often starts faster than heavier virtualization-based setups.
 
 ## Related Resources
 
