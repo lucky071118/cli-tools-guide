@@ -14,28 +14,28 @@ lastUpdated: 2024-06-01
 
 # mise — Minimal Session Executor
 
-`mise` (示範工具) 是個輕量指令工具，可在終端中平行或循序執行多個任務，並提供簡單的結果匯總。若你的工作流程需要快速啟動多個子程序或測試多個命令，這類工具很實用。
+`mise` (used here as a sample tool) is a lightweight command-line utility for running multiple tasks in parallel or sequence in the terminal, with simple result summaries. It is useful when you need to launch several subprocesses quickly or try multiple commands in one workflow.
 
 ## Basic Usage
 
 ```bash
-# 假設 mise 支援一個簡單的配置檔案 tasks.yml
+# Assume mise supports a simple tasks.yml configuration file
 mise run
 
-# 或直接在命令列傳入多個工作
+# Or pass multiple jobs directly on the command line
 mise exec "npm test" "bundle exec rake" "python -m pytest"
 ```
 
-## Practical Example: 並行化測試套件
+## Practical Example: Run Test Suites in Parallel
 
-假設要在多個 Ruby / Node / Python 專案分別執行測試，可用 `mise` 並行啟動，節省等待時間：
+If you need to run tests across multiple Ruby, Node, or Python projects, you can launch them in parallel with `mise` to reduce waiting time:
 
 ```bash
 mise exec "(cd service-a && npm test)" "(cd service-b && pytest)" "(cd service-c && bundle exec rspec)"
 ```
 
-執行完畢後，`mise` 會以程式碼與最後輸出結束狀態總結，方便你快速判別哪個服務失敗。
+When the jobs finish, `mise` summarizes their exit status and final output so you can quickly see which service failed.
 
 ## Related Tools
 
-- `tmux` — 長期會話與分割視窗管理。
+- `tmux` — long-running sessions and split-pane management.

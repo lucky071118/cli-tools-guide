@@ -250,49 +250,49 @@ BAT_STYLE=plain BAT_THEME=ansi bat file.txt
 
 *Author: CLI Tools Guide — [Contact](/contact) | Last updated: 2024-01-15*
 
-## 實作範例：用 `bat` 建立可讀性更佳的檢視流程
+## Practical Examples: Use `bat` for More Readable Viewing Workflows
 
-以下範例示範如何把 `bat` 整合到日常工作流程，提高檔案檢視與除錯效率。範例涵蓋三個情境：快速預覽、Git 差異檢查，以及在管線中使用無色輸出。
+The examples below show how to integrate `bat` into everyday workflows to improve file viewing and debugging. They cover three scenarios: quick previewing, reviewing Git diffs, and producing colorless output in pipelines.
 
-1) 快速預覽專案檔案（搭配 fzf）
+1) Quickly preview project files with fzf
 
-把 `bat` 與 `fzf` 結合，建立一個互動式檔案預覽工具：
+Combine `bat` with `fzf` to create an interactive file preview tool:
 
 ```bash
-# 將可預覽的檔案使用 fzf 選擇，右側顯示 bat 預覽
+# Select a file with fzf and show a bat preview on the right
 fzf --preview 'bat --color=always --style=numbers --line-range=:120 {}' \
   --preview-window 'right:60%' \
   --bind 'enter:accept' \
   --height 40%
 ```
 
-這個指令可以快速在大型專案中定位檔案，且預覽會顯示語法高亮與行號，閱讀與導覽更直覺。
+This command helps you find files quickly in large projects, with previews that include syntax highlighting and line numbers for easier reading and navigation.
 
-2) 在 Git 差異檢查中漂亮顯示變更
+2) Render Git diffs more clearly
 
-把 `bat` 設為 Git 的 pager，可在 `git diff` 時看到帶顏色與行號的差異：
+Set `bat` as Git's pager to see colorized diffs with line numbers during `git diff`:
 
 ```bash
 git config --global core.pager "bat --paging=always --style=numbers,changes"
 
-# 現在執行 git diff 時會用 bat 顯示（保留色彩與變動標記）
+# git diff will now render through bat with color and change markers
 git diff HEAD~1
 ```
 
-這能幫助審查變更時更快定位到改動的位置與語義。
+This makes it easier to review changes and locate the exact context of a modification.
 
-3) 在自動化腳本中輸出純文字（無顏色）以便解析
+3) Emit plain text in automation scripts for easy parsing
 
-若要在 CI 或腳本中使用 `bat` 輸出但不希望有顏色控制碼，可以關閉色彩並使用純輸出：
+If you want to use `bat` in CI or scripts without ANSI color codes, disable color and use plain output:
 
 ```bash
-# 在腳本中使用無色輸出以保證被其他工具正確解析
+# Use colorless output in scripts so other tools can parse it reliably
 bat --color=never --style=plain README.md > /tmp/readme-plain.txt
 
-# 或在管線中直接傳給 grep/awk 處理
+# Or pipe it directly to grep/awk
 bat --color=never src/main.rs | rg "TODO|FIXME"
 ```
 
-這樣可以在保有 `bat` 的語言推斷與格式化優勢下，提供機器讀取友好的輸出。
+This preserves `bat`'s language detection and formatting strengths while keeping the output machine-friendly.
 
-以上實作示例可立即提升日常使用 `bat` 的效率，並讓檔案檢視、版本檢查與自動化流程更穩定。
+These examples can immediately improve day-to-day use of `bat` and make file inspection, version review, and automation flows more reliable.

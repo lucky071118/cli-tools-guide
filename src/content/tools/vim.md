@@ -331,42 +331,42 @@ do        — diff obtain (get change from other window)
 
 *Author: CLI Tools Guide — [Contact](/contact) | Last updated: 2024-01-16*
 
-## 實作範例：三個 vim 工作流程範例
+## Practical Examples: Three Vim Workflow Patterns
 
-下面範例說明如何用 vim 高效處理遠端編輯、批量重構與自動化 commit 訊息。
+The examples below show how to use vim efficiently for remote editing, bulk refactoring, and automated commit messages.
 
-1) 遠端快速修正（SSH + vim）
+1) Quick remote fixes with SSH + vim
 
-在遠端伺服器上，你可以使用 `vim -R` 或 `vim +:set noreadonly` 等方式檢查並編輯檔案。範例：
+On a remote server, you can use `vim -R` or `vim +:set noreadonly` to inspect and edit files safely. For example:
 
 ```bash
-# 透過 ssh 進入伺服器，利用 vim 編輯 nginx 設定
+# SSH into the server and edit the nginx config with vim
 ssh user@host "sudo vim /etc/nginx/nginx.conf"
 ```
 
-使用 vim 的 `:set backupcopy=yes` 與 `:w` 可確保編輯時權限與備份行為符合預期。
+Using vim's `:set backupcopy=yes` together with `:w` helps ensure file permissions and backup behavior work as expected during edits.
 
-2) 批量重構：宏與 substitute 的組合
+2) Bulk refactoring with macros and substitute
 
-當有大量重複修改時，記錄一個 macro 並套用到多行：
+When you need to make many repetitive edits, record a macro and replay it across multiple lines:
 
 ```vim
-" 假設要在每行末尾加上分號
+" Add a semicolon to the end of each line
 qa A;<Esc>q
-" 在 100 行上重播 macro
+" Replay the macro across 100 lines
 100@a
 ```
 
-對於跨檔案的替換，結合 `:argdo` 與 `:bufdo`：
+For cross-file replacements, combine `:argdo` with `:bufdo`:
 
 ```vim
-" 在所有參數檔案中替換 foo -> bar
+" Replace foo -> bar in all argument files
 :argdo %s/foo/bar/g | update
 ```
 
-3) 自動化 commit 訊息模板
+3) Automated commit message templates
 
-在 `.git/` 內設定 `core.editor` 為 vim，並使用 commit-msg 範本：
+Set `core.editor` to vim and use a commit message template from `.git/`:
 
 ```bash
 git config --global core.editor "vim"
@@ -374,6 +374,6 @@ echo -e "# Title\n\n# Body (wrap at 72 chars)\n" > .git/commit-template
 git config --global commit.template .git/commit-template
 ```
 
-這樣在 `git commit` 時會載入範本，讓團隊的提交訊息更一致。
+This causes `git commit` to load the template so the team can keep commit messages more consistent.
 
-這些實際範例能讓你在不同情境下更有效率地使用 vim：從單機到遠端、從單次操作到批次自動化。
+These examples make it easier to use vim efficiently in different situations, from local work to remote editing and from one-off changes to batch automation.

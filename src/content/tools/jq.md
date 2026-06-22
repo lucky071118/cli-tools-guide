@@ -28,18 +28,18 @@ jq '.users[] | {id, name}' data.json
 
 ## Practical Example: Aggregate API Data
 
-以下範例示範如何用 `curl` 取得一組 JSON，並用 `jq` 做聚合分析。
+The example below shows how to fetch JSON with `curl` and use `jq` for aggregation and analysis.
 
 ```bash
-# 取得 API 回傳的一系列事件，計算不同類型的數量
+# Fetch a stream of API events and count how many of each type appear
 curl -s https://api.example.com/events | \
   jq -r '.events[] | .type' | sort | uniq -c | sort -rn
 
-# 另一個範例：取出最大檔案並顯示資訊
+# Another example: find the largest file and display its details
 curl -s https://api.example.com/files | jq '.files | max_by(.size) | {name: .name, size: .size}'
 ```
 
-`jq` 的強大在於它可以嵌入 shell 腳本中，讓 JSON 的過濾與重組變得簡潔而可重複。
+`jq` is especially powerful because it fits naturally into shell scripts, making JSON filtering and reshaping concise and repeatable.
 
 ## Related Resources
 

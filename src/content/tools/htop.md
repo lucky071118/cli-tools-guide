@@ -25,20 +25,20 @@ htop
 # Tree view: F5
 ```
 
-## Practical Example: 找出佔用最多記憶體的進程並重啟
+## Practical Example: Find the Highest-Memory Process and Restart It
 
-在生產或測試機上，你可以使用 `ps` 與 `sort` 先找出候選，再用 `htop` 做互動檢查：
+On a production or test machine, you can first use `ps` and `sort` to identify candidates, then inspect them interactively with `htop`:
 
 ```bash
-# 找出 top 5 記憶體消耗進程
+# Show the top 5 memory-consuming processes
 ps aux --sort=-%mem | head -n 6
 
-# 如果要從命令列重啟一個服務
+# Restart a service from the command line if needed
 pid=$(ps aux | rg 'myservice' | awk '{print $2}')
 kill -HUP $pid
 ```
 
-`htop` 更適合作為互動式監控工具，配合記錄與自動化腳本可以加速故障排查流程。
+`htop` works best as an interactive monitoring tool, and it pairs well with logs and automation scripts to speed up troubleshooting.
 
 ## Related Resources
 
