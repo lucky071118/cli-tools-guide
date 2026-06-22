@@ -100,7 +100,135 @@ pubDate: 2024-06-01
 ---
 ```
 
-3. Write the content in Markdown. The page is generated automatically.
+3. Write the content in Markdown following the **required page structure** below. The page is generated automatically.
+
+---
+
+## 📄 Tool Page Structure
+
+Every tool guide must follow this exact section order to keep the site consistent. Use the template below as your starting point.
+
+```markdown
+# toolname — Full Descriptive Name
+
+## What is toolname?
+
+One paragraph explaining what the tool is, what problem it solves, and who it is for.
+Keep it concise but informative — this is the first thing readers see.
+
+## Why Use toolname?
+
+- 🔑 **Key benefit 1** — brief explanation.
+- ⚡ **Key benefit 2** — brief explanation.
+- 🔧 **Key benefit 3** — brief explanation.
+(aim for 5–7 bullet points with emoji)
+
+## Installation
+
+```bash
+# Ubuntu / Debian
+sudo apt install toolname
+
+# macOS (Homebrew)
+brew install toolname
+
+# Fedora / RHEL
+sudo dnf install toolname
+
+# Arch Linux
+sudo pacman -S toolname
+
+# Verify
+toolname --version
+` ``
+
+## Basic Usage
+
+` ``bash
+# Most common commands with short comments
+toolname --flag value
+` ``
+
+## 💡 Tips & Tricks
+
+### Tip 1: Title of the tip
+
+Explanation of the tip.
+
+` ``bash
+# Code example
+` ``
+
+### Tip 2: Title of the tip
+...
+(aim for 6–10 tips)
+
+## Advanced Applications
+
+### Subsection: Real Workflow Name
+
+Explanation + code block showing a complete, real-world use of the tool.
+
+### Subsection: Another Workflow
+
+Another advanced example — integrations with other CLI tools, automation scripts, etc.
+
+## Related Resources
+
+- 📖 [Official Documentation](https://example.com/docs)
+- 🔧 [GitHub Repository](https://github.com/org/repo)
+- 📘 [Tutorial or Cheat Sheet](https://example.com)
+
+## Related Tools
+
+- `other-tool` — one-line description of how it relates.
+- `another-tool` — one-line description.
+
+## Real-world Use Cases
+
+- **Scenario 1** — what problem this solves in practice.
+- **Scenario 2** — another concrete use case.
+- **Scenario 3** — another concrete use case.
+(aim for 4–6 bullet points)
+
+## When Not To Use toolname
+
+- **Case 1** — when a different tool or approach is better.
+- **Case 2** — a known limitation.
+- **Case 3** — another scenario to avoid.
+
+---
+
+## Practical Examples: Descriptive Title Summarising the Examples
+
+` ``bash
+# 1. Short label
+command --flags
+
+# 2. Another example
+command | other-command
+` ``
+```
+
+### Section rules
+
+| Section | Required | Notes |
+|---------|----------|-------|
+| `## What is X?` | ✅ | Named heading — not a bare paragraph |
+| `## Why Use X?` | ✅ | Bulleted list with emoji |
+| `## Installation` | ✅ | Cover at least macOS + Ubuntu + one other |
+| `## Basic Usage` | ✅ | Most common day-to-day commands |
+| `## 💡 Tips & Tricks` | ✅ | Use `### Tip N: Title` format; 6–10 tips |
+| `## Advanced Applications` | ✅ | 2–4 named subsections with real workflows |
+| `## Related Resources` | ✅ | External links with emoji prefix |
+| `## Related Tools` | ✅ | Internal cross-references |
+| `## Real-world Use Cases` | ✅ | 4–6 bullet points of concrete scenarios |
+| `## When Not To Use X` | ✅ | Honest limitations; 3–5 bullet points |
+| `## Practical Examples: Title` | ✅ | Footer code section; 2–4 self-contained examples |
+
+### Minimum content requirement
+
+Each guide must be **at least 800 words** of original content (frontmatter excluded). Google AdSense and general quality standards require substantial, non-thin content on every page.
 
 ---
 
