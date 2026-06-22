@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cli-tools-guide.pages.dev/sitemap-index.xml
