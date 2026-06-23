@@ -1,6 +1,5 @@
 ---
 import Layout from './Layout.astro';
-import AdBlock from '../components/AdBlock.astro';
 
 export interface Props {
   title: string;
@@ -109,10 +108,6 @@ const tocIndentClass = (level: number) => {
           <slot />
         </article>
 
-        <!-- Desktop-only side/mid ad: hidden on mobile to improve UX -->
-        <div class="hidden lg:block">
-          <AdBlock slot="mid" format="vertical" />
-        </div>
       </div>
     </div>
   </div>

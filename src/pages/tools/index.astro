@@ -1,7 +1,6 @@
 ---
 // src/pages/tools/index.astro — All tools listing page
 import Layout from '../../layouts/Layout.astro';
-import AdBlock from '../../components/AdBlock.astro';
 import { getCollection } from 'astro:content';
 
 const toolEntries = await getCollection('tools');
@@ -77,7 +76,5 @@ const categoryIcons: Record<string, string> = {
       ))}
     </div>
 
-    <!-- AD: Bottom of tools listing -->
-    <AdBlock slot="bottom" format="horizontal" class="mt-10" />
   </div>
 </Layout>

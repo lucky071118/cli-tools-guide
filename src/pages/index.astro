@@ -2,7 +2,6 @@
 // src/pages/index.astro — Home page
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import AdBlock from '../components/AdBlock.astro';
 
 // Tool metadata for the featured tools section
 const featuredTools = [
@@ -93,9 +92,6 @@ const featuredTools = [
   </section>
 
   <!-- AD: Mid-page placement -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <AdBlock slot="mid" format="rectangle" />
-  </div>
 
   <!-- Why CLI Tools section -->
   <section class="bg-gray-50 dark:bg-slate-800/50 py-16 mt-4">
@@ -123,7 +119,4 @@ const featuredTools = [
   </section>
 
   <!-- AD: Bottom page placement -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <AdBlock slot="bottom" format="horizontal" />
-  </div>
 </Layout>
