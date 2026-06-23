@@ -85,4 +85,21 @@
   .tool-card {
     @apply bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200;
   }
+
+  /* Copy button for code blocks */
+  .prose-tool pre {
+    position: relative;
+  }
+
+  .copy-btn {
+    @apply absolute top-2 right-2 bg-gray-800 text-white px-3 py-1 text-xs rounded-md opacity-90 hover:opacity-100 transition-opacity;
+  }
+
+  .dark .copy-btn {
+    @apply bg-slate-700;
+  }
+
+  .copy-btn[aria-pressed="true"] {
+    @apply bg-green-600;
+  }
 }
