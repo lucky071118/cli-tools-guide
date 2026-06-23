@@ -1,5 +1,4 @@
 ---
-// ToolLayout.astro — Layout for individual tool pages with TOC and ad placements
 import Layout from './Layout.astro';
 import AdBlock from '../components/AdBlock.astro';
 
@@ -7,11 +6,23 @@ export interface Props {
   title: string;
   description: string;
   tool: string;
+  pubDate?: string;
+  author?: string;
   /** Table of contents entries */
   toc?: { id: string; text: string; level: number }[];
 }
 
-const { title, description, tool, toc = [] } = Astro.props;
+const { title, description, tool, pubDate, author, toc = [] } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description: description,
+  ...(author ? { author: { "@type": "Person", name: author } } : {}),
+  ...(pubDate ? { datePublished: pubDate } : {}),
+};
+
 const tocIndentClass = (level: number) => {
   switch (level) {
     case 3:
@@ -27,6 +38,7 @@ const tocIndentClass = (level: number) => {
 ---
 
 <Layout title={title} description={description}>
+  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="mb-6 text-sm text-gray-500 dark:text-slate-400">
