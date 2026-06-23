@@ -48,13 +48,12 @@ const relatedTools: RelatedTool[] = (frontmatter.related ?? [])
   title={frontmatter.title}
   description={frontmatter.description}
   tool={slug}
+  pubDate={frontmatter.pubDate ? frontmatter.pubDate.toISOString() : undefined}
+  author={frontmatter.author}
   toc={toc}
 >
   <!-- Tool Content from Markdown -->
   <Content />
-
-  <!-- AD: Mid-article placement (after main content, before related tools) -->
-  <AdBlock slot="mid" format="rectangle" />
 
   <!-- Related Tools Card Row -->
   {relatedTools.length > 0 && (
