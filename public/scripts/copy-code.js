@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     button.addEventListener('click', async () => {
       const code = pre.querySelector('code');
-      const text = code ? code.innerText : pre.innerText;
+      const src = code ? code.innerText : pre.innerText;
+      const cleaned = src.split('\n').filter(l => !/^\s*#(?!\!)/.test(l)).join('\n').trim();
       try {
-        await navigator.clipboard.writeText(text.trim());
+        await navigator.clipboard.writeText(cleaned);
         button.textContent = 'Copied';
         button.setAttribute('aria-pressed', 'true');
         setTimeout(() => { button.textContent = 'Copy'; button.removeAttribute('aria-pressed'); }, 2000);
       } catch (err) {
-        // Fallback
         const ta = document.createElement('textarea');
-        ta.value = text;
+        ta.value = cleaned;
         document.body.appendChild(ta);
         ta.select();
         try { document.execCommand('copy'); button.textContent = 'Copied'; } catch (e) { /* ignore */ }
