@@ -12,7 +12,7 @@
     "security:audit:lockfile": "npm audit --audit-level=high --package-lock-only"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.2",
     "astro": "7.0.3",
     "sharp": "^0.35.2",
     "tailwindcss": "^4.3.1"
