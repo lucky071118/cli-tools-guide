@@ -21,5 +21,4 @@
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
   Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Embedder-Policy: require-corp
   Report-To: {"group":"sentry-csp-endpoint","max_age":10886400,"endpoints":[{"url":"https://o4511324793536512.ingest.us.sentry.io/api/4511324821258240/security/?sentry_key=115cde30fe3a30e16b03c77688f3aad5"}],"include_subdomains":true}

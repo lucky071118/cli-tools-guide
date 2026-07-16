@@ -20,7 +20,7 @@ const {
 
 const siteName = 'CLI Tools Guide';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
-const adsenseClientId = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID;
+const adsenseClientId = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? '';
 const hasAdsenseClient = Boolean(
   adsenseClientId && adsenseClientId !== 'ca-pub-XXXXXXXXXXXXXXXXX',
 );
@@ -53,6 +53,10 @@ const hasAdsenseClient = Boolean(
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    {hasAdsenseClient && (
+      <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClientId}`} crossorigin="anonymous"></script>
+    )}
+
     <!-- Structured data (JSON-LD) -->
     <script type="application/ld+json" is:inline>
       {JSON.stringify(() => {
@@ -82,9 +86,6 @@ const hasAdsenseClient = Boolean(
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2857099576461226"
-      crossorigin="anonymous"></script>
 
   </head>
   <body class="min-h-screen flex flex-col">
