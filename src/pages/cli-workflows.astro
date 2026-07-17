@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="CLI Workflows" description="Build efficient command-line workflows with ripgrep, fzf, bat, and other essential terminal tools.">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-gray-500 dark:text-slate-400">
+      <ol class="flex items-center gap-2">
+        <li><a href="/" class="hover:text-blue-600 dark:hover:text-blue-400">Home</a></li>
+        <li><span class="mx-1">›</span></li>
+        <li class="text-gray-800 dark:text-slate-200 font-medium" aria-current="page">CLI Workflows</li>
+      </ol>
+    </nav>
+
+    <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-6">CLI Workflows: Practical Terminal Patterns</h1>
+
+    <div class="prose-tool">
+      <p>Command-line tools are most powerful when they work together. This guide explains how to combine popular utilities like <strong>ripgrep</strong>, <strong>fzf</strong>, <strong>bat</strong>, and Git to build repeatable terminal workflows that save time and reduce friction.</p>
+
+      <h2>Why CLI workflows matter</h2>
+      <p>A single tool can solve a narrow problem, but the real value of the terminal comes from composition. Well-designed CLI workflows make it easy to:</p>
+      <ul>
+        <li>find the right file or symbol quickly</li>
+        <li>preview content before editing</li>
+        <li>edit text in context</li>
+        <li>reuse the same pattern in many projects</li>
+      </ul>
+
+      <h2>Core workflow principles</h2>
+      <p>All good terminal workflows follow a few simple rules:</p>
+      <ul>
+        <li><strong>Prefer pipes</strong> to move structured data between tools.</li>
+        <li><strong>Make output human-readable</strong> so you can verify results before changing files.</li>
+        <li><strong>Use filters</strong> to narrow results before taking action.</li>
+        <li><strong>Automate safely</strong> with preview steps and small, incremental changes.</li>
+      </ul>
+
+      <h2>Workflow 1: Search, preview, edit</h2>
+      <p>When you need to locate a symbol and inspect it before editing, combine:</p>
+      <ul>
+        <li><strong>ripgrep</strong> for fast project search</li>
+        <li><strong>fzf</strong> for fuzzy selection</li>
+        <li><strong>bat</strong> for readable previews</li>
+      </ul>
+
+      <pre><code class="language-bash">rg --line-number TODO | fzf --delimiter : --preview 'bat --style=numbers --color=always &#123;1&#125; --highlight-line &#123;2&#125;'</code></pre>
+      <p>This command finds TODO comments, lets you choose the match with <code>fzf</code>, and previews the file around the selected line with <code>bat</code>. If the result is the right file, open it in your editor or continue the workflow.</p>
+
+      <h2>Workflow 2: Find and replace with confidence</h2>
+      <p>Use the search-only step first, then run the replacement after reviewing matches:</p>
+      <pre><code class="language-bash">rg --line-number 'oldFunctionName' --glob '!node_modules/*'</code></pre>
+      <p>When the matches look correct, replace safely with a preview-first workflow:</p>
+      <pre><code class="language-bash">rg --files-with-matches 'oldFunctionName' | xargs -I&#123;&#125; sh -c 'bat --style=numbers --color=always &#123;&#125; | sed -n "1,20p"'</code></pre>
+      <p>Finally, make the edit in the editor or use a tool like <code>perl -pi -e</code> only after verification.</p>
+
+      <h2>Workflow 3: Jump to files with fzf and git</h2>
+      <p>Discover changed files and open them quickly from the current repo:</p>
+      <pre><code class="language-bash">git status --short | fzf --preview 'bat --style=numbers --color=always &#123;1&#125;'</code></pre>
+      <p>This pattern helps you inspect staged or modified files before committing changes.</p>
+
+      <h2>Workflow 4: Build reusable shell functions</h2>
+      <p>Encapsulate common workflows in shell functions or scripts so you can reuse them without typing long pipelines each time.</p>
+      <pre><code class="language-bash"># ~/.bashrc or ~/.zshrc
+rgf() &#123;
+  rg --line-number "$1" --glob '!node_modules/*' | fzf --delimiter : --preview 'bat --style=numbers --color=always &#123;1&#125; --highlight-line &#123;2&#125;'
+&#125;
+</code></pre>
+      <p>Then run <code>rgf TODO</code> anywhere in the repo.</p>
+
+      <h2>Related tools</h2>
+      <p>This workflow guide is most effective when paired with these pages:</p>
+      <ul>
+        <li><a href="/tools/fzf">fzf</a> — fuzzy finder</li>
+        <li><a href="/tools/ripgrep">ripgrep</a> — fast search</li>
+        <li><a href="/tools/bat">bat</a> — preview pager</li>
+        <li><a href="/tools/vim">vim</a> — terminal editor</li>
+      </ul>
+
+      <h2>When not to use CLI workflows</h2>
+      <ul>
+        <li><strong>Non-text data:</strong> use dedicated GUI tools for images, video, or complex binary formats.</li>
+        <li><strong>Large files:</strong> some very large files are better inspected with specialized log analysis tools.</li>
+        <li><strong>Team training:</strong> avoid overly custom shell functions if your team prefers shared tooling and documentation.</li>
+      </ul>
+
+      <h2>Next steps</h2>
+      <p>To make these workflows productive on your machine, invest in a small dotfiles setup, add aliases for frequently used commands, and keep the terminal environment predictable. The more you reuse the same patterns, the more value you get from the CLI.</p>
+    </div>
+  </div>
+</Layout>
